@@ -3,14 +3,13 @@ from app import app
 
 client = TestClient(app)
 
-def test_health():
-    response = client.get("/health")
+def test_health(client):
+    response = client.get('/health')
+    data = response.get_json()
     assert response.status_code == 200
-    assert response.json() == {
-        "status": "healthy",
-        "application": "student-ml-api",
-        "version": "1.0.0"
-    }
+    assert data["status"] == "healthy"
+    assert data["application_version"] == "1.1.0"
+    assert data["model_version"] == "model-1"
 
 def test_predict_success():
     response = client.post("/predict", json={"value": 10})

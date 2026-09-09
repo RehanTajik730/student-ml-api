@@ -6,13 +6,14 @@ app = FastAPI()
 class PredictPayload(BaseModel):
     value: float
 
-@app.get("/health")
+@app.route('/health', methods=['GET'])
 def health():
-    return {
+    return jsonify({
         "status": "healthy",
         "application": "student-ml-api",
-        "version": "1.0.0"
-    }
+        "application_version": "1.1.0",
+        "model_version": "model-1"
+    }), 200
 
 @app.post("/predict")
 def predict(payload: PredictPayload):
