@@ -5,7 +5,7 @@ client = TestClient(app)
 
 def test_health(client):
     response = client.get('/health')
-    data = response.get_json()
+    data = response.json()
     assert response.status_code == 200
     assert data["status"] == "healthy"
     assert data["application_version"] == "1.1.0"
